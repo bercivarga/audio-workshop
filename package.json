@@ -1,0 +1,16 @@
+{
+  "name": "audio-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "scripts": {
+    "start": "parcel"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "p5": "^1.4.1",
+    "parcel": "^2.5.0"
+  }
+}
