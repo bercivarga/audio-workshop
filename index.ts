@@ -6,12 +6,15 @@ const OCTAVES = [2, 3, 4];
 
 Tone.Destination.volume.value = -8;
 const synth = new Tone.Synth({oscillator: { type: "sine" }}).toDestination();
+let feedbackDelay = new Tone.FeedbackDelay("8n", 0.6);
 synth.connect(Tone.Destination);
+synth.connect(feedbackDelay);
+feedbackDelay.connect(Tone.Destination);
 
 function sketch(p5: P5) {
 	p5.setup = function() {
 		p5.createCanvas(p5.windowWidth, p5.windowHeight);
-		p5.background(220);
+		p5.background(0, 0, 0, 0);
 	}
 	
 	p5.windowResized = function() {
@@ -19,6 +22,7 @@ function sketch(p5: P5) {
 	}
 	
 	p5.mousePressed = function() {
+		p5.background(p5.random() > 0.49 ? "black" : "white");
 		p5.stroke(0, 0);
 		
 		const whatColor = Math.floor(5 * p5.random());
@@ -28,34 +32,28 @@ function sketch(p5: P5) {
 		
 		switch (whatColor) {
 			case 0:
-				p5.fill('#FB5012');
+				p5.fill("#FB5012");
 				colorName = "Orange Aerospace";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;
 			case 1:
-				p5.fill('#01FDF6');
+				p5.fill("#01FDF6");
 				colorName = "Fluorescent Blue";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;
 			case 2:
-				p5.fill('#CBBAED');
+				p5.fill("#CBBAED");
 				colorName = "Lavender Blue";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;
 			case 3:
-				p5.fill('#E9DF00');
+				p5.fill("#E9DF00");
 				colorName = "Titanium Yellow";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;	
 			case 4:
-				p5.fill('#FB5012');
+				p5.fill("#FB5012");
 				colorName = "Sea Green Crayola";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;
 			default:
-				p5.fill('#FB5012');
+				p5.fill("#FB5012");
 				colorName = "Orange Aerospace";
-				p5.text(colorName, p5.mouseX, p5.mouseY + -8);
 				break;
 		}
 		
@@ -64,7 +62,7 @@ function sketch(p5: P5) {
 				p5.rect(p5.mouseX, p5.mouseY, 80, 80, 20);
 				break;
 			case 1:
-				p5.ellipse(p5.mouseX, p5.mouseY, 80, 80);
+				p5.ellipse(p5.mouseX, p5.mouseY + 40, 80, 80);
 				break;
 			case 2:
 				p5.triangle(p5.mouseX, p5.mouseY, p5.mouseX - 20, p5.mouseY, p5.mouseX - 10, p5.mouseY + 20);
@@ -73,10 +71,17 @@ function sketch(p5: P5) {
 				p5.rect(p5.mouseX, p5.mouseY, 80, 80, 20);
 				break;
 		}		
+
+		p5.text(colorName, p5.mouseX, p5.mouseY + -8);
+
 		const n = p5.random(NOTES);
 		const o = p5.random(OCTAVES);
 		
 		synth.triggerAttackRelease(n + o, "8n");
+	}
+	
+	function clearCanvas(color: string): void {
+		
 	}
 }
 
