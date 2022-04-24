@@ -21,8 +21,13 @@ function sketch(p5: P5) {
 		p5.resizeCanvas(p5.windowWidth, p5.windowHeight, false);
 	}
 	
+	p5.draw = function() {
+		const opacity = 0.05;
+		p5.background(0, 0, 0, opacity * 255);
+	}
+	
 	p5.mousePressed = function() {
-		p5.background(p5.random() > 0.49 ? "black" : "white");
+		p5.background("white");
 		p5.stroke(0, 0);
 		
 		const whatColor = Math.floor(5 * p5.random());
